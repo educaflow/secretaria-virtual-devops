@@ -84,6 +84,8 @@ docker container run -d \
   --name secretariavirtual-${ENVIRONMENT}-db \
   --hostname secretariavirtual-db \
   --network secretariavirtual_${ENVIRONMENT} \
+  --restart always \
+  -e TZ=Europe/Madrid \
   -e POSTGRES_USER=educaflow \
   -e POSTGRES_PASSWORD=educaflow \
   -e POSTGRES_DB=educaflow \
@@ -97,6 +99,8 @@ docker container run -d \
   --name secretariavirtual-${ENVIRONMENT}-app \
   --hostname secretariavirtual-app \
   --network secretariavirtual_${ENVIRONMENT} \
+  --restart always \
+  -e TZ=Europe/Madrid \
   -e APP_GIT_URL=${APP_GIT_URL} \
   -e APP_GIT_BRANCH=${APP_GIT_BRANCH} \
   -p 80:8080 \

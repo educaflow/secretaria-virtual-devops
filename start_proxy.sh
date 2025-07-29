@@ -10,6 +10,8 @@ docker container rm nginx-proxy
 docker container run --detach \
     --name nginx-proxy \
     --publish 80:80 \
+	--restart always \
+	-e TZ=Europe/Madrid \
     --volume /var/run/docker.sock:/tmp/docker.sock:ro \
     nginxproxy/nginx-proxy:1.7.1
 

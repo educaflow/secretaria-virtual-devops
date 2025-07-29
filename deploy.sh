@@ -77,14 +77,13 @@ fi
 rm ./environments/${ENVIRONMENT}/private/axelor-config.properties
 cp ../secretaria-virtual-private/axelor-config.${ENVIRONMENT}.properties ./environments/production/private/axelor-config.properties
 
-
+#  --restart always \
 
 docker container run -d \
   -dit \
   --name secretariavirtual-${ENVIRONMENT}-db \
   --hostname secretariavirtual-db \
   --network secretariavirtual_${ENVIRONMENT} \
-  --restart always \
   -e TZ=Europe/Madrid \
   -e POSTGRES_USER=educaflow \
   -e POSTGRES_PASSWORD=educaflow \
@@ -99,7 +98,7 @@ docker container run -d \
   --name secretariavirtual-${ENVIRONMENT}-app \
   --hostname secretariavirtual-app \
   --network secretariavirtual_${ENVIRONMENT} \
-  --restart always \
+
   -e TZ=Europe/Madrid \
   -e APP_GIT_URL=${APP_GIT_URL} \
   -e APP_GIT_BRANCH=${APP_GIT_BRANCH} \

@@ -5,6 +5,11 @@ APP_GIT_PRODUCTION_BRANCH=master
 APP_GIT_STAGING_BRANCH=release
 APP_GIT_DEVELOP_BRANCH=develop
 
+VIRTUAL_HOST_PRODUCTION=secretaria.fpmislata.com
+VIRTUAL_HOST_STAGING=secretaria-pre.fpmislata.com
+VIRTUAL_HOST_DEVELOP=secretaria-dev.fpmislata.com
+
+
 # Comprobar si se ha pasado exactamente un argumento
 if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
     echo "Error: Número de parámetros incorrecto."
@@ -25,12 +30,15 @@ case "$ENVIRONMENT" in
         if [ "$ENVIRONMENT" == "production" ]; then
             echo "Desplegando la aplicación en el entorno de producción..."
             APP_GIT_BRANCH=${APP_GIT_PRODUCTION_BRANCH}
+            VIRTUAL_HOST=${VIRTUAL_HOST_PRODUCTION}
         elif [ "$ENVIRONMENT" == "staging" ]; then
             echo "Desplegando la aplicación en el entorno de staging..."
             APP_GIT_BRANCH=${APP_GIT_STAGING_BRANCH}
+            VIRTUAL_HOST=${VIRTUAL_HOST_STAGING}
         else # develop
             echo "Desplegando la aplicación en el entorno de desarrollo..."
             APP_GIT_BRANCH=${APP_GIT_DEVELOP_BRANCH}
+            VIRTUAL_HOST=${VIRTUAL_HOST_DEVELOP}
         fi
         ;;
     *)
@@ -69,7 +77,7 @@ fi
 rm ./environments/${ENVIRONMENT}/private/axelor-config.properties
 cp ../secretaria-virtual-private/axelor-config.${ENVIRONMENT}.properties ./environments/production/private/axelor-config.properties
 
-docker network create secretariavirtual_${ENVIRONMENT}
+
 
 docker container run -d \
   -dit \
@@ -88,10 +96,11 @@ docker container run -d \
   -dit \
   --name secretariavirtual-${ENVIRONMENT}-app \
   --hostname secretariavirtual-app \
-  --network secretariavirtual_production \
+  --network secretariavirtual_${ENVIRONMENT} \
   -e APP_GIT_URL=${APP_GIT_URL} \
   -e APP_GIT_BRANCH=${APP_GIT_BRANCH} \
   -p 80:8080 \
+  -e VIRTUAL_HOST=${VIRTUAL_HOST} \
   -v "./environments/${ENVIRONMENT}/data/app:/opt/secretariavirtual/data" \
   -v "./environments/${ENVIRONMENT}/private:/opt/secretariavirtual/app/secretaria-virtual-private" \
   secretariavirtual-app:1.0.0

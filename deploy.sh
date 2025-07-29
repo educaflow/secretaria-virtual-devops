@@ -103,8 +103,8 @@ docker container run -d \
   -e APP_GIT_BRANCH=${APP_GIT_BRANCH} \
   -p 80:8080 \
   -e VIRTUAL_HOST=${VIRTUAL_HOST} \
-  --memory=""  \
-  --memory-swap="" \
+  --memory="1.5g"  \
+  --memory-swap="1.5g" \
   -v "./environments/${ENVIRONMENT}/data/app:/opt/secretariavirtual/data" \
   -v "./environments/${ENVIRONMENT}/private:/opt/secretariavirtual/app/secretaria-virtual-private" \
   secretariavirtual-app:1.0.0

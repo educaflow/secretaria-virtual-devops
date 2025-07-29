@@ -98,7 +98,6 @@ docker container run -d \
   --name secretariavirtual-${ENVIRONMENT}-app \
   --hostname secretariavirtual-app \
   --network secretariavirtual_${ENVIRONMENT} \
-
   -e TZ=Europe/Madrid \
   -e APP_GIT_URL=${APP_GIT_URL} \
   -e APP_GIT_BRANCH=${APP_GIT_BRANCH} \

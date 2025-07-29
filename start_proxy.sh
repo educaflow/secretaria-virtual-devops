@@ -13,9 +13,6 @@ docker container run --detach \
     --volume /var/run/docker.sock:/tmp/docker.sock:ro \
     nginxproxy/nginx-proxy:1.7.1
 
-docker network create secretariavirtual_production
-docker network create secretariavirtual_staging
-docker network create secretariavirtual_develop
 
 docker network connect secretariavirtual_production nginx-proxy
 docker network connect secretariavirtual_staging nginx-proxy

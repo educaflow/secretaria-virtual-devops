@@ -20,6 +20,8 @@ environments/develop/data/database/*
 environments/develop/private/*
 !environments/develop/private/.gitkeep
 
+export-image
+
 
 
 

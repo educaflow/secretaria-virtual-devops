@@ -75,22 +75,21 @@ if [ ${NO_CREATE_IMAGE} == "false" ]; then
 fi
 
 rm ./environments/${ENVIRONMENT}/private/axelor-config.properties
-cp ../secretaria-virtual-private/axelor-config.${ENVIRONMENT}.properties ./environments/production/private/axelor-config.properties
+cp ../secretaria-virtual-private/axelor-config.${ENVIRONMENT}.properties ./environments/${ENVIRONMENT}/private/axelor-config.properties
 
-#  --restart always \
-#  -p 80:8080 \
 
 docker container run -d \
   -dit \
   --name secretariavirtual-${ENVIRONMENT}-db \
   --hostname secretariavirtual-db \
   --network secretariavirtual_${ENVIRONMENT} \
+  --restart always \
   -e TZ=Europe/Madrid \
   -e POSTGRES_USER=educaflow \
   -e POSTGRES_PASSWORD=educaflow \
   -e POSTGRES_DB=educaflow \
   -e PGDATA=/var/lib/postgresql/data/pgdata \
-  -v "./environments/production/data/database:/var/lib/postgresql/data" \
+  -v "./environments/${ENVIRONMENT}/data/database:/var/lib/postgresql/data" \
   postgres:12.22
 
 
@@ -99,6 +98,7 @@ docker container run -d \
   --name secretariavirtual-${ENVIRONMENT}-app \
   --hostname secretariavirtual-app \
   --network secretariavirtual_${ENVIRONMENT} \
+  --restart always \
   -e TZ=Europe/Madrid \
   -e APP_GIT_URL=${APP_GIT_URL} \
   -e APP_GIT_BRANCH=${APP_GIT_BRANCH} \

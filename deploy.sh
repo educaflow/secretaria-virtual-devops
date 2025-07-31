@@ -70,8 +70,7 @@ docker container stop secretariavirtual-${ENVIRONMENT}-db
 docker container rm secretariavirtual-${ENVIRONMENT}-db
 
 if [ ${NO_CREATE_IMAGE} == "false" ]; then
-    docker image rm secretariavirtual-app:1.0.0
-    docker buildx build --tag secretariavirtual-app:1.0.0 --no-cache --file ./build-app/Dockerfile ./build-app/src
+    ./create_app_image.sh --export-image
 fi
 
 rm ./environments/${ENVIRONMENT}/private/axelor-config.properties

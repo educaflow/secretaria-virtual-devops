@@ -6,7 +6,7 @@ RUN apt update
 RUN apt install -y git
 
 #Traductor
-RUN sudo apt install -y apertium apertium-spa-cat cg3 vislcg3 apertium-all-dev
+RUN apt install -y apertium apertium-spa-cat cg3 vislcg3 apertium-all-dev
 
 # Install MAVEN
 RUN wget https://dlcdn.apache.org/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.tar.gz -P /tmp 
